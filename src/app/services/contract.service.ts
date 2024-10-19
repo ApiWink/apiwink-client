@@ -1,14 +1,22 @@
 import { Address, parseUnits } from "viem";
 import { publicClient, walletClient } from "../configs/transport-clients";
+import {
+  AUTOSPLIT_CONTRACT_ADDRESS,
+  USDC_ADDRESS,
+} from "@/app/constants/addresses";
+import { autoSplitContractABI } from "@/app/constants/abis/autoSplitContract";
+import { erc20ABI } from "@/app/constants/abis/erc20";
+import { useAccount } from "wagmi";
 
 export const approveToken = async () => {
+  const { address } = useAccount();
   try {
     const { request: r2 } = await publicClient!.simulateContract({
-      address: "" as Address,
-      abi: [],
+      address: USDC_ADDRESS as Address,
+      abi: erc20ABI,
       functionName: "approve",
-      args: ["", parseUnits("100000", 6)],
-      account: "" as Address,
+      args: [AUTOSPLIT_CONTRACT_ADDRESS, parseUnits("100000", 6)],
+      account: address as Address,
     });
     const hash2 = await walletClient.writeContract(r2);
     console.log(hash2);
@@ -19,13 +27,14 @@ export const approveToken = async () => {
 };
 
 export const callContract = async () => {
+  const { address } = useAccount();
   try {
     const { request } = await publicClient.simulateContract({
-      address: "" as Address,
-      abi: [],
-      functionName: "batchTransfer",
-      args: [[], [], "" as Address],
-      account: "" as Address,
+      address: AUTOSPLIT_CONTRACT_ADDRESS as Address,
+      abi: autoSplitContractABI,
+      functionName: "autoSplitPayment",
+      args: [USDC_ADDRESS, "5", "", ""],
+      account: address as Address,
     });
 
     const hash = await walletClient.writeContract(request);
