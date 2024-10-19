@@ -1,12 +1,12 @@
-import { createWalletClient, custom, createPublicClient, http } from "viem";
-import { mainnet } from "viem/chains";
+import { createWalletClient, createPublicClient, http } from "viem";
+import { skaleEuropaTestnet } from "viem/chains";
 
 export const walletClient = createWalletClient({
-  chain: mainnet,
-  transport: custom(window.ethereum!),
+  chain: skaleEuropaTestnet,
+  transport: http(),
 });
 
 export const publicClient = createPublicClient({
-  chain: mainnet,
+  chain: skaleEuropaTestnet,
   transport: http(),
 });

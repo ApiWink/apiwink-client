@@ -6,40 +6,42 @@ import {
 } from "@/app/constants/addresses";
 import { autoSplitContractABI } from "@/app/constants/abis/autoSplitContract";
 import { erc20ABI } from "@/app/constants/abis/erc20";
-import { useAccount } from "wagmi";
+import { skaleEuropaTestnet } from "viem/chains";
+import { createWalletClient, createPublicClient, http } from "viem";
+import { useWriteContract } from "wagmi";
 
-export const approveToken = async () => {
-  const { address } = useAccount();
+export const approveToken = async (address: Address) => {
+  console.log("address from useHook - approve", address);
+
+  const walletClient = createWalletClient({
+    chain: skaleEuropaTestnet,
+    transport: http(),
+  });
+
+  const { writeContract } = useWriteContract();
+
   try {
-    const { request: r2 } = await publicClient!.simulateContract({
+    const request = writeContract({
       address: USDC_ADDRESS as Address,
       abi: erc20ABI,
       functionName: "approve",
-      args: [AUTOSPLIT_CONTRACT_ADDRESS, parseUnits("100000", 6)],
+      args: [AUTOSPLIT_CONTRACT_ADDRESS as Address, parseUnits("10", 6)],
       account: address as Address,
     });
-    const hash2 = await walletClient.writeContract(r2);
-    console.log(hash2);
-    return hash2;
+    console.log("did approval work - ", request);
+
+    return request;
   } catch (e) {
-    console.log(e);
+    console.log("error from approving token", e);
   }
 };
 
-export const callContract = async () => {
-  const { address } = useAccount();
-  try {
-    const { request } = await publicClient.simulateContract({
-      address: AUTOSPLIT_CONTRACT_ADDRESS as Address,
-      abi: autoSplitContractABI,
-      functionName: "autoSplitPayment",
-      args: [USDC_ADDRESS, "5", "", ""],
-      account: address as Address,
-    });
+export const callContract = async (address: string) => {
+  console.log("address from useAccount - call contract", address);
 
-    const hash = await walletClient.writeContract(request);
-    console.log("hash", hash);
+  try {
+    const request = "";
   } catch (err) {
-    console.log("err");
+    console.log("error from split contract", err);
   }
 };
