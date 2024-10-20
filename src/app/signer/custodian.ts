@@ -2,7 +2,7 @@ import { initializeCustodian } from "../configs";
 import { createClient } from "../configs";
 import { parseEther, toHex } from "viem";
 import { CUSTODIAN_PRIVATE_KEY, WSS_URL } from "../configs/config";
-
+import { ethers } from "ethers";
 const DEFAULT_FILL_UP_VALUE: bigint = parseEther("0.00000002");
 
 class Custodian {
@@ -45,6 +45,14 @@ class Custodian {
   }
 
   public async distribute(to: `0x${string}`) {
+    const provider = new ethers.JsonRpcProvider(
+      "https://juicy-low-small-testnet-indexer.skalenodes.com:10008"
+    );
+
+    this.nonce = await provider.getTransactionCount(
+      this.custodian.account.address
+    );
+    console.log(this.nonce, "nonceee");
     const hash = await this.custodian.sendTransaction({
       to,
       value: DEFAULT_FILL_UP_VALUE,
