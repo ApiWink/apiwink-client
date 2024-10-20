@@ -24,8 +24,8 @@ export const createWallet = async (email: string) => {
     const custodian = Custodian;
     try {
       console.log("distributing", address);
-    //   const dist_tx = await custodian.distribute(address as `0x${string}`);
-    //   console.log(dist_tx, "dist_tx");
+      const dist_tx = await custodian.distribute(address as `0x${string}`);
+      console.log(dist_tx, "dist_tx");
       await saveUserToDb(email, address);
       //deposit tokens
       const wallet = new ethers.Wallet(

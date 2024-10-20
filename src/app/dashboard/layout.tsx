@@ -27,7 +27,7 @@ export default function DashboardLayout({
     const walletAddress = localStorage.getItem("wallet_address");
     if (!walletAddress) return null;
     return (
-      <div className="absolute top-10 right-10 bg-gray-100 p-2 rounded-md text-xs">
+      <div className="absolute top-10 right-10 bg-gray-100 p-2 rounded-md text-xs min-w-[200px] flex  items-center justify-around cursor-pointer">
         <div>{shortenAddress(walletAddress as string)}</div>
         <div>{wktBalance || "0"} WKT</div>
       </div>
