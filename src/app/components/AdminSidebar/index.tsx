@@ -12,7 +12,7 @@ import {
   IconSwitchHorizontal,
   IconLogout,
 } from "@tabler/icons-react";
-import classes from "./Sidebar.module.css";
+import classes from "./AdminSidebar.module.css";
 
 const data = [
   { link: "", label: "Notifications", icon: IconBellRinging },
@@ -24,7 +24,7 @@ const data = [
   { link: "", label: "Other Settings", icon: IconSettings },
 ];
 
-export function Sidebar() {
+export function AdminSidebar() {
   const [active, setActive] = useState("Billing");
 
   const links = data.map((item) => (
