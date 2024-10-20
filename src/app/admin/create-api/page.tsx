@@ -1,18 +1,16 @@
 "use client";
-import React, { useState, version } from "react";
+import React, { useState } from "react";
 import {
   TextInput,
   Textarea,
   MultiSelect,
-  Checkbox,
   NumberInput,
   Button,
-  Container,
+  Box,
   Title,
   Space,
-  Select,
-  Box,
 } from "@mantine/core";
+import { notifications } from '@mantine/notifications';
 
 const CreateApiPage = () => {
   const [apiName, setApiName] = useState("");
@@ -23,12 +21,9 @@ const CreateApiPage = () => {
   const [apiTags, setApiTags] = useState<string[]>([]);
   const [autoExpiry, setAutoExpiry] = useState(false);
   const [enableSessionKeys, setEnableSessionKeys] = useState(false);
-  const [maxRateLimit, setMaxRateLimit] = useState<number | undefined>(
-    undefined
-  );
-
+  const [maxRateLimit, setMaxRateLimit] = useState<number | undefined>(undefined);
   const [schemaValue, setSchemaValue] = useState("");
-
+  
   const [pricePairs, setPricePairs] = useState([
     { calls: "", price: "" },
     { calls: "", price: "" },
@@ -45,40 +40,87 @@ const CreateApiPage = () => {
     setPricePairs(updatedPairs);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const isAtLeastOneFilled = pricePairs.some(
       (pair) => pair.calls || pair.price
     );
     if (!isAtLeastOneFilled) {
-      alert("Please fill at least one price entry for API calls.");
+      notifications.show({
+        title: 'Error',
+        message: 'Please fill at least one price entry for API calls.',
+        color: 'red',
+      });
       return;
     }
+  
+    // Prepare the data to send
     const values = {
       apiName,
+      developerName,
+      version,
       requestMethod,
       apiDescription,
       apiTags,
       autoExpiry,
       enableSessionKeys,
       maxRateLimit,
+      pricePairs,
     };
-    console.log("Form values:", values);
-    // Handle form submission logic here
+  
+    try {
+      const response = await fetch('https://apiwink-backend.onrender.com/create_service', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const responseData = await response.json();
+      console.log("Data submitted successfully:", responseData);
+  
+      // Clear all form fields
+      setApiName("");
+      setDeveloperName("");
+      setVersion("");
+      setRequestMethod(null);
+      setApiDescription("");
+      setApiTags([]);
+      setAutoExpiry(false);
+      setEnableSessionKeys(false);
+      setMaxRateLimit(undefined);
+      setSchemaValue("");
+      setPricePairs([
+        { calls: "", price: "" },
+        { calls: "", price: "" },
+        { calls: "", price: "" },
+      ]);
+  
+      // Show success notification
+      notifications.show({
+        title: 'Success',
+        message: 'Configuration created successfully!',
+        color: 'green',
+      });
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      notifications.show({
+        title: 'Error',
+        message: 'Failed to create configuration. Please try again.',
+        color: 'red',
+      });
+    }
   };
-
-  function typeScriptToJson(input: string): string {
-    return input
-      .replace(/(\w+): (\w+);/g, '"$1": "$2",')
-      .replace(/,(\s*})/, "$1")
-      .replace(/;$/, "");
-  }
 
   const handlePaste = (event: any) => {
     event.preventDefault();
     const pastedData = event.clipboardData.getData("text");
 
     const parsedTS = typeScriptToJson(pastedData);
-
     console.log(parsedTS, "parsedTS");
 
     try {
@@ -89,12 +131,18 @@ const CreateApiPage = () => {
     }
   };
 
+  function typeScriptToJson(input: string): string {
+    return input
+      .replace(/(\w+): (\w+);/g, '"$1": "$2",')
+      .replace(/,(\s*})/, "$1")
+      .replace(/;$/, "");
+  }
+
   const handleChange = (event: any) => {
     const value = event.target.value;
 
     try {
       const json = JSON.parse(value);
-
       setSchemaValue(JSON.stringify(json, undefined, 2));
     } catch (e) {
       console.log("Invalid JSON", value, e);
@@ -151,7 +199,7 @@ const CreateApiPage = () => {
             <MultiSelect
               label="API Tags"
               placeholder="Select tags"
-              data={["tag1", "tag2", "tag3"]} // Replace with your tag options
+              data={["tag1", "tag2", "tag3"]}
               searchable
               value={apiTags}
               onChange={setApiTags}
@@ -190,7 +238,7 @@ const CreateApiPage = () => {
                 placeholder="Enter number of calls"
                 value={pair.calls}
                 onChange={(value) =>
-                  handlePriceChange(index, "calls", value.toString())
+                  handlePriceChange(index, "calls", value?.toString() || "")
                 }
               />
               <NumberInput
@@ -198,7 +246,7 @@ const CreateApiPage = () => {
                 placeholder="Enter price"
                 value={pair.price}
                 onChange={(value) =>
-                  handlePriceChange(index, "price", value.toString())
+                  handlePriceChange(index, "price", value?.toString() || "")
                 }
               />
             </div>
