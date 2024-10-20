@@ -60,7 +60,7 @@ const UserProfilePage = () => {
     );
 
     return (
-        <Box p="md">
+        <Box p="md" w="1340">
             <Title order={1} size="xl">Hey There,</Title>
             <Space h="lg" />
 

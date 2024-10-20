@@ -21,16 +21,21 @@ import { data } from './data';
 
 const AdminsHome = () => {
     return (
-        <Container>
-            <Title order={1} align="center" mt="lg">Marketplace</Title>
+        <Container className="w-[80vw] mt-[5vh]">
+            <Title order={1} mt="lg">Marketplace</Title>
+            <Space h="lg" />
+            <Space h="lg" />
+            <Space h="lg" />
+            <Space h="lg" />
             <AreaChart
                 h={300}
+                w="1280"
                 data={data}
                 dataKey="date"
                 series={[
-                    { name: 'Apples', color: 'indigo.6' },
-                    { name: 'Oranges', color: 'blue.6' },
-                    { name: 'Tomatoes', color: 'teal.6' },
+                    { name: 'API1', color: 'indigo.6' },
+                    { name: 'API2', color: 'blue.6' },
+                    { name: 'API3', color: 'teal.6' },
                 ]}
                 curveType="monotone"
             />

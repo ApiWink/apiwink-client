@@ -15,13 +15,12 @@ import {
 import classes from "./Sidebar.module.css";
 
 const data = [
-  { link: "", label: "Notifications", icon: IconBellRinging },
-  { link: "", label: "Billing", icon: IconReceipt2 },
-  { link: "", label: "Security", icon: IconFingerprint },
-  { link: "", label: "SSH Keys", icon: IconKey },
-  { link: "", label: "Databases", icon: IconDatabaseImport },
-  { link: "", label: "Authentication", icon: Icon2fa },
-  { link: "", label: "Other Settings", icon: IconSettings },
+  { link: "", label: "Usage", icon: IconBellRinging },
+  { link: "", label: "Marketplace", icon: IconReceipt2 },
+  { link: "", label: "Onboarding", icon: IconFingerprint },
+  { link: "", label: "APIWink SDK", icon: IconKey },
+  { link: "", label: "Earn By Docs", icon: IconDatabaseImport },
+  { link: "", label: "Contact Us", icon: Icon2fa },
 ];
 
 export function Sidebar() {

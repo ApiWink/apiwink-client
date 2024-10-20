@@ -13,7 +13,7 @@ class Custodian {
   constructor() {
     console.log(CUSTODIAN_PRIVATE_KEY, "CUSTODIAN_PRIVATE_KEY");
     this.custodian = initializeCustodian(
-      ("0x" + CUSTODIAN_PRIVATE_KEY) as `0x${string}`
+      CUSTODIAN_PRIVATE_KEY as `0x${string}`
     );
     this.client = createClient();
     this.isValidCustodian();
@@ -45,7 +45,7 @@ class Custodian {
   }
 
   public async distribute(to: `0x${string}`) {
-    const provider = new ethers.JsonRpcProvider(
+    const provider = new ethers.providers.JsonRpcProvider(
       "https://juicy-low-small-testnet-indexer.skalenodes.com:10008"
     );
 
