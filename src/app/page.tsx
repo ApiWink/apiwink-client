@@ -17,6 +17,7 @@ import { useWriteContract } from "wagmi";
 import { config } from "./contexts/Web3Provider";
 import BackgroundSigners from "./signer/background-signer";
 import { USDC } from "./signer/contracts";
+import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
 
 export default function App() {
   const { isConnected, address } = useAccount();
@@ -67,6 +68,7 @@ export default function App() {
       {isConnected ? <Account /> : <WalletOptions />}
       <button onClick={() => approveToken()}>Approve token</button>
       <button onClick={() => callContract()}>Call contract</button>
+      <DynamicWidget innerButtonComponent={<h1>Log in or Sign up</h1>} />
     </div>
   );
 }
