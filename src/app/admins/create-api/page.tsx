@@ -1,18 +1,21 @@
 "use client";
 import React, { useState } from 'react';
-import { TextInput, Textarea, MultiSelect, Checkbox, NumberInput, Button, Container, Title, Space, Divider } from '@mantine/core';
+import { TextInput, Textarea, MultiSelect, Checkbox, NumberInput, Button, Container, Title, Space, Select, Box } from '@mantine/core';
 
 const CreateApiPage = () => {
     const [apiName, setApiName] = useState('');
+    const [requestMethod, setRequestMethod] = useState<string | null>(null);
     const [apiDescription, setApiDescription] = useState('');
     const [apiTags, setApiTags] = useState<string[]>([]);
     const [autoExpiry, setAutoExpiry] = useState(false);
     const [enableSessionKeys, setEnableSessionKeys] = useState(false);
     const [maxRateLimit, setMaxRateLimit] = useState<number | undefined>(undefined);
 
+
     const handleSubmit = () => {
         const values = {
             apiName,
+            requestMethod,
             apiDescription,
             apiTags,
             autoExpiry,
@@ -24,16 +27,25 @@ const CreateApiPage = () => {
     };
 
     return (
-        <Container>
-            <Title order={2} align="center" mt="lg">Create API Configuration</Title>
+        <Box p="md">
+            <Title order={2} mt="lg">Create API Configuration</Title>
             <Space h="lg" />
-            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+            <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }} style={{width: "40%"}}>
                 <TextInput
                     label="API Name"
                     placeholder="Enter API Name"
                     required
                     value={apiName}
                     onChange={(event) => setApiName(event.currentTarget.value)}
+                />
+                <Space h="lg" />
+
+                <Select
+                    label="Request Method"
+                    placeholder="Select request method"
+                    data={['GET', 'POST', 'PUT', 'UPDATE', 'PUSH', 'DELETE']}
+                    value={requestMethod}
+                    onChange={setRequestMethod}
                 />
                 <Space h="lg" />
 
@@ -83,7 +95,7 @@ const CreateApiPage = () => {
 
                 <Button type="submit">Create Configuration</Button>
             </form>
-        </Container>
+        </Box>
     );
 };
 
