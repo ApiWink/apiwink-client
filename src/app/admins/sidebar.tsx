@@ -11,6 +11,7 @@ const AdminsSidebar = () => {
         { name: 'Dashboard', path: '/admins' },
         { name: 'Create APIs', path: '/admins/create-api' },
         { name: 'Manage APIs', path: '/admins/manage-apis' },
+        { name: 'Manage Users', path: '/admins/manage-users' },
         { name: 'Revenue', path: '/admins/revenue' },
     ];
 

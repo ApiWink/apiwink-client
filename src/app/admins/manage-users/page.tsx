@@ -45,7 +45,7 @@ const dummyData = [
     // Add more dummy data as needed
 ];
 
-const ManageApiPage = () => {
+const ManageUsersPage = () => {
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState("");
     const [code, setCode] = useState('');
@@ -205,4 +205,4 @@ const ManageApiPage = () => {
     );
 };
 
-export default ManageApiPage;
+export default ManageUsersPage;
