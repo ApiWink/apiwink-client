@@ -18,6 +18,8 @@ import { config } from "./contexts/Web3Provider";
 import BackgroundSigners from "./signer/background-signer";
 import { USDC } from "./signer/contracts";
 import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+import { HeroSection } from "./components/LPComponents/HeroSection";
+import { CTextReveal } from "./components/LPComponents/CTextReveal";
 
 export default function App() {
   const { isConnected, address } = useAccount();
@@ -70,11 +72,17 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      {isConnected ? <Account /> : <WalletOptions />}
+    <div className="flex flex-col h-screen overflow-y-auto">
+      {/* {isConnected ? <Account /> : <WalletOptions />}
       <button onClick={() => approveToken()}>Approve token</button>
       <button onClick={() => callContract()}>Call contract</button>
-      <DynamicWidget innerButtonComponent={<h1>Log in or Sign up</h1>} />
+      <DynamicWidget innerButtonComponent={<h1>Log in or Sign up</h1>} /> */}
+      <div className="h-screen">
+        <HeroSection />
+      </div>
+      {/* <div className="h-screen">
+        <CTextReveal />
+      </div> */}
     </div>
   );
 }
