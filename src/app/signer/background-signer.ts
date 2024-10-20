@@ -25,7 +25,7 @@ class BackgroundSigners {
     console.log(signer.address, "account from getUser");
     if (!signer.address) throw new Error("Account Not Found");
 
-    console.log(signer.address, userId, "this.signers[userId]");
+    console.log(signer.address, userId, "signer address");
 
     let res;
 

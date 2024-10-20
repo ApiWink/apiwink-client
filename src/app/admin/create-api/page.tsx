@@ -254,8 +254,10 @@ const CreateApiPage = () => {
         </div>
 
         {/* Button at the bottom left */}
-        <div className="flex justify-start w-full p-2">
-          <Button type="submit">Create Configuration</Button>
+        <div className="flex justify-start w-[1/2] space-x-2 p-2">
+          <Button type="submit" className="w-full">
+            Create Configuration
+          </Button> 
         </div>
       </form>
     </Box>
