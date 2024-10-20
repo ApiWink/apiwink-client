@@ -18,18 +18,19 @@ class BackgroundSigners {
     args: any[],
     abi: any,
     address: Address,
-    functionName: string
+    functionName: string,
+    email: string
   ) {
-    const account = await createSigner().address;
-    console.log(account, "account from getUser");
-    if (!account) throw new Error("Account Not Found");
+    const signer = await createSigner(email);
+    console.log(signer.address, "account from getUser");
+    if (!signer.address) throw new Error("Account Not Found");
 
-    console.log(account, userId, "this.signers[userId]");
+    console.log(signer.address, userId, "this.signers[userId]");
 
     let res;
 
     try {
-      const contract = new ethers.Contract(address, abi, createSigner());
+      const contract = new ethers.Contract(address, abi, signer);
 
       const tx = await contract[functionName](...args);
       await tx.wait();

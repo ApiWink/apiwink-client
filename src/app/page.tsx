@@ -17,7 +17,7 @@ import { useWriteContract } from "wagmi";
 import { config } from "./contexts/Web3Provider";
 import BackgroundSigners from "./signer/background-signer";
 import { USDC } from "./signer/contracts";
-import { DynamicWidget } from "@dynamic-labs/sdk-react-core";
+import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 export default function App() {
   const { isConnected, address } = useAccount();
@@ -25,14 +25,18 @@ export default function App() {
 
   const bgSigner = BackgroundSigners;
 
+  const { user } = useDynamicContext();
+
   const approveToken = async () => {
+    if (!user?.email) return;
     try {
       const res = await bgSigner.backgroundSignerAction(
         address as string,
         [AUTOSPLIT_CONTRACT_ADDRESS as Address, parseUnits("100000", 6)],
         USDC.abi,
         USDC.address as Address,
-        "approve"
+        "approve",
+        user.email
       );
       console.log("did approval work - from bg signer", res);
     } catch (e) {
@@ -41,6 +45,7 @@ export default function App() {
   };
 
   const callContract = async () => {
+    if (!user?.email) return;
     console.log("calling contract");
     try {
       const res = await bgSigner.backgroundSignerAction(
@@ -54,7 +59,8 @@ export default function App() {
         ],
         autoSplitContractABI,
         AUTOSPLIT_CONTRACT_ADDRESS as Address,
-        "autoSplitPayment"
+        "autoSplitPayment",
+        user.email
       );
 
       console.log("did call contract work - from bg signer", res);
