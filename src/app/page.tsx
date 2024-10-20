@@ -20,14 +20,33 @@ import { USDC } from "./signer/contracts";
 import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 import { HeroSection } from "./components/LPComponents/HeroSection";
 import { CTextReveal } from "./components/LPComponents/CTextReveal";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { createWallet } from "./configs/createWallet";
 
 export default function App() {
+  const router = useRouter();
   const { isConnected, address } = useAccount();
   const { writeContractAsync } = useWriteContract();
 
   const bgSigner = BackgroundSigners;
 
   const { user } = useDynamicContext();
+
+  useEffect(() => {
+    const createW = async () => {
+      if (user) {
+        console.log("userrrr", user);
+        const pvKey = await createWallet(user.email as string);
+        console.log("pvKey", pvKey);
+        if (pvKey) {
+          localStorage.setItem("wallet_address", pvKey.address);
+          router.push("/dashboard");
+        }
+      }
+    };
+    createW();
+  }, [user]);
 
   const approveToken = async () => {
     if (!user?.email) return;
@@ -72,17 +91,11 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-y-auto">
+    <div className="flex flex-col h-screen w-screen items-center justify-center overflow-y-auto">
       {/* {isConnected ? <Account /> : <WalletOptions />}
       <button onClick={() => approveToken()}>Approve token</button>
-      <button onClick={() => callContract()}>Call contract</button>
-      <DynamicWidget innerButtonComponent={<h1>Log in or Sign up</h1>} /> */}
-      <div className="h-screen">
-        <HeroSection />
-      </div>
-      {/* <div className="h-screen">
-        <CTextReveal />
-      </div> */}
+      <button onClick={() => callContract()}>Call contract</button> */}
+      <DynamicWidget innerButtonComponent={<h1>Log in or Sign up</h1>} />
     </div>
   );
 }
