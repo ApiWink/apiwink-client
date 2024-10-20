@@ -52,7 +52,7 @@ const CreateApiPage = () => {
       });
       return;
     }
-
+  
     // Prepare the data to send
     const values = {
       apiName,
@@ -66,7 +66,7 @@ const CreateApiPage = () => {
       maxRateLimit,
       pricePairs,
     };
-
+  
     try {
       const response = await fetch('https://apiwink-backend.onrender.com/create_service', {
         method: 'POST',
@@ -75,14 +75,32 @@ const CreateApiPage = () => {
         },
         body: JSON.stringify(values),
       });
-
+  
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const responseData = await response.json();
       console.log("Data submitted successfully:", responseData);
-
+  
+      // Clear all form fields
+      setApiName("");
+      setDeveloperName("");
+      setVersion("");
+      setRequestMethod(null);
+      setApiDescription("");
+      setApiTags([]);
+      setAutoExpiry(false);
+      setEnableSessionKeys(false);
+      setMaxRateLimit(undefined);
+      setSchemaValue("");
+      setPricePairs([
+        { calls: "", price: "" },
+        { calls: "", price: "" },
+        { calls: "", price: "" },
+      ]);
+  
+      // Show success notification
       notifications.show({
         title: 'Success',
         message: 'Configuration created successfully!',
