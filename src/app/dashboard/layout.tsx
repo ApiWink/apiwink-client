@@ -1,5 +1,7 @@
 "use client";
 import { Sidebar } from "../components/Sidebar";
+import { getWKTBalance } from "../configs/get-wkt-balance";
+import { useEffect, useState } from "react";
 
 export default function DashboardLayout({
   children,
@@ -10,12 +12,24 @@ export default function DashboardLayout({
     return address.slice(0, 6) + "..." + address.slice(-4);
   }
 
+  const [wktBalance, setWKTBalance] = useState<string | null>(null);
+
+  const fetchWKTBalance = async () => {
+    const balance = await getWKTBalance();
+    setWKTBalance(balance);
+  };
+
+  useEffect(() => {
+    fetchWKTBalance();
+  }, []);
+
   const WalletAddressComponent = () => {
     const walletAddress = localStorage.getItem("wallet_address");
     if (!walletAddress) return null;
     return (
       <div className="absolute top-10 right-10 bg-gray-100 p-2 rounded-md text-xs">
         <div>{shortenAddress(walletAddress as string)}</div>
+        <div>{wktBalance || "0"} WKT</div>
       </div>
     );
   };

@@ -29,7 +29,7 @@ export default function App() {
   const { isConnected, address } = useAccount();
   const { writeContractAsync } = useWriteContract();
 
-  const bgSigner = BackgroundSigners;
+const bgSigner = BackgroundSigners;
 
   const { user } = useDynamicContext();
 
