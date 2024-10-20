@@ -12,7 +12,7 @@ const dummyData = [
         title: "Weather API",
         description:
             "Provides real-time and forecasted weather information for any location worldwide. Access current conditions, hourly forecasts, and more.",
-        price: "$10/month",
+        price: "WKT10/month",
         company: "Weather Co",
         type: ["Weather", "Climate"],
         response: '{"location": "San Francisco", "temperature": "72°F"}',
@@ -30,7 +30,7 @@ const dummyData = [
         title: "Payment API",
         description:
             "Provides real-time and forecasted weather information for any location worldwide. Access current conditions, hourly forecasts, and more.",
-        price: "$10/month",
+        price: "WKT10/month",
         company: "Weather Co",
         type: ["Weather", "Climate"],
         response: '{"location": "San Francisco", "temperature": "72°F"}',
@@ -135,7 +135,7 @@ const UserProfilePage = () => {
                     }}
                 >
                     <Text size="xl" weight={700}>
-                        50K$
+                        50KWKT
                     </Text>
                     <Text size="sm" color="dimmed">
                         Saved in Subscriptions
@@ -243,7 +243,7 @@ const UserProfilePage = () => {
                                 <Card shadow="xs" radius="md" withBorder style={{ width: '22%' }}>
                                     <Group>
                                         <Text size="xl">
-                                            50K$
+                                            50KWKT
                                         </Text>
                                         <Text size="sm">
                                             Spent

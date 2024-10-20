@@ -226,7 +226,7 @@ const ApiDetails = () => {
                     const price = priceObj[calls];
                     return (
                       <Badge key={index} color="blue" variant="light">
-                        {price}$/{calls} calls
+                        {price}WKT/{calls} calls
                       </Badge>
                     );
                   })}

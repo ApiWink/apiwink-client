@@ -62,8 +62,8 @@ const Marketplace = () => {
       item.pricing.map((p: any) => parseFloat(p[1]))
     );
     return [
-      { value: "low", label: `Below $20` },
-      { value: "high", label: `$20 and above` },
+      { value: "low", label: `Below 20WKT` },
+      { value: "high", label: `20WKT and above` },
     ];
   }, [data]);
 
@@ -172,7 +172,7 @@ const Marketplace = () => {
               <Title order={3}>{item.serviceName}</Title>
               <Space h="sm" />
               <Badge color="blue" variant="light">
-                {Object.values(item.pricing[0])[0]}$/{Object.keys(item.pricing[0])[0]} calls
+                {Object.values(item.pricing[0])[0]}WKT/{Object.keys(item.pricing[0])[0]} calls
               </Badge>
               <Space h="md" />
 
