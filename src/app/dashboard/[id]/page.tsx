@@ -141,9 +141,6 @@ const mockData = [
     }
 ];
 
-
-// import { Editor, highlight, languages } from 'react-syntax-highlighter';
-
 const TerminalModal = ({ isOpen, onClose, curlRequest, setCurlRequest, handleRequest, curlResponse }) => {
     return (
         <Modal opened={isOpen} onClose={onClose} title="Terminal" size="lg">
@@ -271,7 +268,7 @@ const ApiDetails = () => {
 
         return { url, method, headers, body };
     };
-    
+
     if (!api) {
         return <Text align="center">Loading API details...</Text>;
     }

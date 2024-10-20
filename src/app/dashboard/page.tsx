@@ -252,10 +252,8 @@ const Marketplace = () => {
             <SimpleGrid cols={3} breakpoints={[{ maxWidth: 768, cols: 1 }]}>
                 {filteredData.map((item) => (
                     <Card key={item.id} shadow="sm" padding="lg" radius="md" withBorder>
-                        <Group position="apart" style={{ marginBottom: 5 }}>
-                            <Title order={3}>{item.title}</Title>
-                            <Badge color="blue" variant="light">{item.price}</Badge>
-                        </Group>
+                        <Title order={3}>{item.title}</Title>
+                        <Badge color="blue" variant="light" my={8}>{item.price}</Badge>
 
                         <Text size="sm" color="dimmed" truncate="end">
                             {item.description}
