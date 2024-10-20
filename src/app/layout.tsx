@@ -2,6 +2,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Web3Provider } from "./contexts/Web3Provider";
+import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,7 +25,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Web3Provider>{children}</Web3Provider>
+        <DynamicContextProvider
+          settings={{
+            environmentId: process.env
+              .NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID as string,
+          }}
+        >
+          <Web3Provider>{children}</Web3Provider>
+        </DynamicContextProvider>
       </body>
     </html>
   );
