@@ -2,7 +2,12 @@
 import localFont from "next/font/local";
 import "./globals.css";
 import { Web3Provider } from "./contexts/Web3Provider";
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import { createTheme } from "@mantine/core";
 import { DynamicContextProvider } from "@dynamic-labs/sdk-react-core";
+
+const theme = createTheme({});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,6 +27,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -31,7 +39,9 @@ export default function RootLayout({
               .NEXT_PUBLIC_DYNAMIC_ENVIRONMENT_ID as string,
           }}
         >
-          <Web3Provider>{children}</Web3Provider>
+          <MantineProvider theme={theme}>
+            <Web3Provider>{children}</Web3Provider>
+          </MantineProvider>
         </DynamicContextProvider>
       </body>
     </html>
